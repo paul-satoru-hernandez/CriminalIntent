@@ -66,6 +66,17 @@ class CrimeDetailFragment : Fragment() {
                 }
             }
 
+            deleteCrime.setOnClickListener {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    crimeDetailViewModel.crime.collect { crime ->
+                        if (crime != null) {
+                            crimeDetailViewModel.deleteCrime(crime)
+                            findNavController().navigateUp()
+                        }
+                    }
+                }
+            }
+
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     crimeDetailViewModel.crime.collect {crime ->
